@@ -1,0 +1,14 @@
+#!/bin/bash
+
+VERSION="1.0.0"
+NAME="next-cloud-link-tracker"
+FULL_NAME="${NAME}:${VERSION}"
+LAST_NAME="${NAME}:last"
+
+
+mkdir -p out
+
+docker build  -t "${FULL_NAME}" -f build/Dockerfile .
+docker tag "${FULL_NAME}" "${LAST_NAME}"
+
+docker save -o "./out/${NAME}_${VERSION}.img" "${FULL_NAME}"

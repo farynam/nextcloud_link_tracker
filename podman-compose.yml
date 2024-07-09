@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  link_tracker:
+    container_name: link_tracker
+    image: next-cloud-link-tracker:last
+    build:
+      dockerfile: ./build/Dockerfile
+      context: /build
+    restart: always
+    userns: "keep-id"
+    depends_on:
+      - nextcloud_app
+    environment:
+      - CONFIG_HOME=/myapps/conf
+      - CONFIG_FILE=config.json
+      - CRON_FILE=cron.conf
+      - DATA_HOME=/myapps/data
+    volumes:
+      - ./volumes/conf/:/myapps/conf/
+      - ./volumes/data/:/myapps/data/
+  nextcloud_db:
+    image: docker.io/postgres:12.13-alpine3.17
+    restart: always
+    container_name: nextcloud_db
+    userns: "keep-id"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/db/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=oc_admin
+    mem_limit: 500m
+    mem_reservation: 30M
+
+  nextcloud_app:
+    image: docker.io/nextcloud:29.0.1
+    restart: always
+    container_name: nextcloud_app
+    userns_mode: "keep-id"
+    depends_on:
+      - nextcloud_db
+    ports:
+      - "8081:80"
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=oc_admin
+      - POSTGRES_HOST=nextcloud_db:5432
+      - NEXTCLOUD_TRUSTED_DOMAINS=localhost
+      - NEXTCLOUD_INIT_HTACCESS=true
+      - REDIS_HOST=nextcloud_redis
+      - REDIS_HOST_PORT=6379
+    volumes:
+      - ./volumes/app_nextcloud/:/var/www/html/
+      - ./volumes/app_apps/:/var/www/html/custom_apps/
+      - ./volumes/app_config/:/var/www/html/config/
+      - ./volumes/app_data/:/var/www/html/data/
+      - ./volumes/app_certs/:/usr/share/ca-certificates/other/
+      - ./volumes/app_themes/:/var/www/html/themes/
+    mem_limit: 1G
+    mem_reservation: 130M
+
+  nextcloud_redis:
+    image: docker.io/webhippie/redis:latest
+    container_name: nextcloud_redis
+    restart: always
+    environment:
+      - REDIS_DATABASES=1
+    mem_limit: 100m
+    mem_reservation: 30M
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5

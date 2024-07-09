@@ -1,0 +1,43 @@
+{
+    "//": "start from beginning of the epoch(true) and don't save progress",
+    "reportOnly": false,
+    "//": "domain where nextcloud is installed",
+    "domain": "cloud.example.com",
+    "//": "email configuration details",
+    "email": {
+        "//": "email address which appear in from section of the email",
+        "from": "cloud@eaxample.com",
+        "//": "email adreess to which notification should be sent",
+        "to": "admin@example.com",
+        "//": "Email subject give something meaningful",
+        "subject": "Nextcloud notification",
+        "//": "SMTP configuration",
+        "smtp": {
+            "//": "SMTP host",
+            "host": "smtp.example.com",
+            "//": "SMTP port",
+            "port": 587,
+            "//": "STARTTLS(false) or TLS",
+            "secure": false,
+            "//": "user",
+            "user": "tmcloud@example.com",
+            "//": "password",
+            "password": "password1"
+        }
+    },
+    "//": "DB connection configuration",
+    "db": {
+        "//": "DB ip or domain",
+        "host": "localhost",
+        "//": "DB port",
+        "port": 5432,
+        "//": "DB user",
+        "user": "oc_admin",
+        "//": "DB password",
+        "password": "password2",
+        "//": "DB name",
+        "database": "nextcloud"
+    },
+    "//": "For which type of resource should be listen(FORM, CALENDAR, FILES)",
+    "notificationOn" : ["FORM", "CALENDAR", "FILES"]
+}

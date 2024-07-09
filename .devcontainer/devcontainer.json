@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/alpine
+{
+	"name": "next-cloud-link-tracker",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"remoteUser": "node",
+	"containerUser": "node",
+	"updateRemoteUserUID": true,
+	
+	// to connect to app on host container
+	"runArgs": [
+    	"--network=host",
+		"--userns=keep-id:uid=1000,gid=1000"
+	],
+
+	//"postAttachCommand": "sudo chown -R node /workspaces",
+
+	
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mads-hartmann.bash-ide-vscode"
+			]
+		}
+	}
+	//dont use it produces too many layers -> out of disk space very quickly
+	// "features": {
+	// 	"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			
+	// 	}
+	// }
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root
+	//"remoteUser": "root",
+	
+}
