@@ -1,9 +1,12 @@
 #!/bin/bash
 
 VERSION="1.0.0"
+DOMAIN="docker.io"
+REPO="farynam"
 NAME="next-cloud-link-tracker"
-FULL_NAME="${NAME}:${VERSION}"
-LAST_NAME="${NAME}:last"
+FULL_NAME="${DOMAIN}/${REPO}/${NAME}:${VERSION}"
+LAST_NAME="${DOMAIN}/${REPO}/${NAME}:last"
+
 PLATFORMS="linux/amd64"
 #PLATFORMS="linux/arm/v7,linux/amd64"
 
@@ -14,3 +17,4 @@ podman tag "${FULL_NAME}" "${LAST_NAME}"
 
 rm "./out/${NAME}_${VERSION}.img"
 podman save -o "./out/${NAME}_${VERSION}.img" "${FULL_NAME}"
+

@@ -18,6 +18,10 @@
 
 	//"postAttachCommand": "sudo chown -R node /workspaces",
 
+	// "remoteEnv" : {
+	// 	"SSL_CERT_FILE" : "/pki/all.crt"
+	// },
+	
 	
 	"customizations": {
 		"vscode": {
@@ -26,12 +30,14 @@
 			]
 		}
 	}
+	
+	//,
 	//dont use it produces too many layers -> out of disk space very quickly
 	// "features": {
-	// 	"ghcr.io/devcontainers/features/docker-in-docker:2": {
+	// 	"ghcr.io/devcontainers/features/docker-in-docker:2.9": {
 			
 	// 	}
-	// }
+	//  }
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
